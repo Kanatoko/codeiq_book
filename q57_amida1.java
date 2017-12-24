@@ -7,7 +7,7 @@ private static final int M = 10; //横線
 
 private static Set< String > data1 = new HashSet<>(); //M未満でも作成可能な結果
 private static Set< String > data2 = new HashSet<>(); //Mで作成された結果
-private static Set< List<Integer> > contextSet = new HashSet<>(); //context全パターン
+private static Set< List< Integer > > contextSet = new HashSet<>(); //context全パターン
 
 public static void printIntArray( int[] array )
 {
@@ -22,16 +22,16 @@ public static void printIntArray( int[] array )
 	System.out.println();
 }
 
-public static void amida2( final int depth, final int lastSelected, final List<Integer> context )
+public static void amida2( final int depth, final int lastSelected, final List< Integer > context )
 {
 	//今回何を選ぶか
-	for( int n = 0; n < N -1; ++n )
+	for( int n = 0; n < N - 1; ++n )
 	{
-		List<Integer> newContext = new ArrayList<>();
+		List< Integer > newContext = new ArrayList<>();
 		newContext.addAll( context );
 		//選んだものをcontextに追加する		
 		newContext.add( n );
-		
+
 		if( depth == M - 1 )
 		{
 			onComplete( newContext );
@@ -40,7 +40,7 @@ public static void amida2( final int depth, final int lastSelected, final List<I
 		{
 			amida2( depth + 1, n, newContext );
 		}
-	}	
+	}
 }
 
 public static void p( Object o )
@@ -49,12 +49,12 @@ public static void p( Object o )
 }
 
 public static void main( String[] args ) throws Exception
-{	
-	amida2( 0, -1, new ArrayList<Integer>() );
-	reduce();	
+{
+	amida2( 0, -1, new ArrayList< Integer >() );
+	reduce();
 }
 
-public static void onComplete( final List<Integer> context )
+public static void onComplete( final List< Integer > context )
 {
 	contextSet.add( context );
 }
@@ -75,49 +75,49 @@ public static String intArrayToString( final int[] array )
 
 public static void reduce()
 {
-	for( List<Integer> context : contextSet )
+	for( List< Integer > context : contextSet )
 	{
 		int[] start = new int[ N ];
 		for( int i = 0; i < N; ++i )
 		{
 			start[ i ] = i + 1;
 		}
-		
-		for( int i = 0; i < M -1; ++i )
+
+		for( int i = 0; i < M - 1; ++i )
 		{
 			Integer value = context.get( i );
-			
-				//入れ替え
+
+			//入れ替え
 			int i1 = start[ value ];
 			int i2 = start[ value + 1 ];
 			start[ value ] = i2;
 			start[ value + 1 ] = i1;
-			
+
 			data1.add( intArrayToString( start ) );
-		}		
+		}
 	}
-	
+
 	p( data1.size() );
 
-	for( List<Integer> context : contextSet )
+	for( List< Integer > context : contextSet )
 	{
 		int[] start = new int[ N ];
 		for( int i = 0; i < N; ++i )
 		{
 			start[ i ] = i + 1;
 		}
-		
+
 		for( int i = 0; i < M; ++i )
 		{
 			Integer value = context.get( i );
-			
-				//入れ替え
+
+			//入れ替え
 			int i1 = start[ value ];
 			int i2 = start[ value + 1 ];
 			start[ value ] = i2;
 			start[ value + 1 ] = i1;
-		}		
-		
+		}
+
 		final String str = intArrayToString( start );
 		if( !data1.contains( str ) )
 		{
@@ -128,13 +128,13 @@ public static void reduce()
 		{
 		}
 	}
-	p( "=======================");
-	
+	p( "=======================" );
+
 	for( String result : data2 )
 	{
 		p( result );
 	}
-	
+
 	p( data2.size() );
 
 }
